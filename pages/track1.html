@@ -24,25 +24,22 @@
     </style>
   </head>
   <body>
-    <h2 class="message">Tab the Screen to play</h2>
+    <h2 class="message">Tab to play</h2>
     <audio id="audio" src="../audio/tiktokscrolling_1.mp3"></audio>
 
     <script>
       const audio = document.getElementById("audio");
       const message = document.querySelector(".message");
-      let randomStart;
 
-      audio.addEventListener("canplaythrough", () => {
+      audio.addEventListener("loadedmetadata", () => {
         const duration = audio.duration;
-        randomStart = Math.random() * duration;
+        const randomStart = Math.random() * duration; // truly random start
+        audio.currentTime = randomStart;
+        audio.play();
       });
 
       document.body.addEventListener("click", () => {
         if (audio.paused) {
-          if (typeof randomStart === "number" && !isNaN(randomStart)) {
-            audio.currentTime = randomStart;
-            randomStart = null; // Reset so it only happens on the first play
-          }
           audio.play();
           message.textContent = "Tab to pause";
         } else {
