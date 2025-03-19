@@ -29,19 +29,25 @@
 
     <script>
       const audio = document.getElementById("audio");
+      const message = document.querySelector(".message");
+      let randomStart;
 
-      audio.addEventListener("loadedmetadata", () => {
+      audio.addEventListener("canplaythrough", () => {
         const duration = audio.duration;
-        const randomStart = Math.random() * duration; // truly random start
-        audio.currentTime = randomStart;
-        audio.play();
+        randomStart = Math.random() * duration;
       });
 
       document.body.addEventListener("click", () => {
         if (audio.paused) {
+          if (typeof randomStart === "number" && !isNaN(randomStart)) {
+            audio.currentTime = randomStart;
+            randomStart = null; // Reset so it only happens on the first play
+          }
           audio.play();
+          message.textContent = "Tab to pause";
         } else {
           audio.pause();
+          message.textContent = "Tab to play";
         }
       });
     </script>
