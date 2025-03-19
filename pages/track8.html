@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Track 1</title>
+    <style>
+      body,
+      html {
+        height: 100vh;
+        margin: 0;
+        background-color: #000;
+        cursor: pointer;
+        display: flex; /* Enable flexbox */
+        justify-content: center; /* Horizontally center */
+        align-items: center; /* Vertically center */
+      }
+
+      .message {
+        color: white;
+        text-align: center; /* Center text inside the element */
+        margin: 0; /* Remove any default margin */
+      }
+    </style>
+  </head>
+  <body>
+    <h2 class="message">Tab the Screen to play</h2>
+    <audio id="audio" src="../audio/tiktokscrolling_8.mp3"></audio>
+
+    <script>
+      const audio = document.getElementById("audio");
+
+      audio.addEventListener("loadedmetadata", () => {
+        const duration = audio.duration;
+        const randomStart = Math.random() * duration; // truly random start
+        audio.currentTime = randomStart;
+        audio.play();
+      });
+
+      document.body.addEventListener("click", () => {
+        if (audio.paused) {
+          audio.play();
+        } else {
+          audio.pause();
+        }
+      });
+    </script>
+  </body>
+</html>
